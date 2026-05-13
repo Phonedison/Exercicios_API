@@ -1,9 +1,9 @@
 package org.serratec.alula03.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.serratec.alula03.domain.Produto;
+import org.serratec.alula03.exception.RecursoNaoEncontradoException;
 import org.serratec.alula03.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,13 +34,21 @@ public class ProdutoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Produto> buscarPorId(@PathVariable Long id) {
-        Optional<Produto> produto = produtoRepository.findById(id); // sem Optional ele vai quebrar -> sendo necessário
+    public ResponseEntity<Produto> buscarPorId(@PathVariable Long id) throws RecursoNaoEncontradoException {
 
-        if (produto.isPresent()) {
-            return ResponseEntity.ok(produto.get());
-        }
-        return ResponseEntity.notFound().build();
+        return produtoRepository.findById(id)
+                .map(pedido -> ResponseEntity.ok(pedido))
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Pedido não encontrado com o ID: " + id));
+
+        /*
+         * Optional<Produto> produto = produtoRepository.findById(id); // sem Optional
+         * ele vai quebrar -> sendo necessário
+         * 
+         * if (produto.isPresent()) {
+         * return ResponseEntity.ok(produto.get());
+         * }
+         * return ResponseEntity.notFound().build();
+         */
     }
 
     @PostMapping

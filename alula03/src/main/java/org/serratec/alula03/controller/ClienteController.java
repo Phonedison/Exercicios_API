@@ -1,10 +1,10 @@
 package org.serratec.alula03.controller;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.serratec.alula03.domain.Cliente;
+import org.serratec.alula03.exception.RecursoNaoEncontradoException;
 import org.serratec.alula03.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,21 +30,38 @@ public class ClienteController {
     private ClienteRepository clienteRepository;
 
     @GetMapping
-    public List<Cliente> listar() {
+    public List<Cliente> listar() throws RecursoNaoEncontradoException {
         return clienteRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cliente> buscar(@PathVariable Long id) {
-        Optional<Cliente> cliente = clienteRepository.findById(id);
-        if (!cliente.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(cliente.get());
+    public ResponseEntity<Cliente> buscar(@PathVariable Long id) throws RecursoNaoEncontradoException {
+
+        return clienteRepository.findById(id) // -> reestruturado para uso de stream()
+                .map(cliente -> ResponseEntity.ok(cliente))
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Cliente não encontrado com id: " + id)); // ->
+                                                                                                               // caso
+                                                                                                               // tenha
+                                                                                                               // erro,
+                                                                                                               // retorna
+                                                                                                               // o
+                                                                                                               // throw
+                                                                                                               // utilizando
+                                                                                                               // .orElseThrow
+
+        /*
+         * Cliente cliente = clienteRepository.findById(id) -> mantém mas tira o
+         * Optional
+         * .orElseThrow(() -> new
+         * RecursoNaoEncontradoException("Cliente não encontrado com id: " + id));
+         * -> caso tenha erro, retorna o throw utilizando .orElseThrow
+         * 
+         * return ResponseEntity.ok(cliente);
+         */
     }
 
     @GetMapping("/buscar")
-    public List<Cliente> buscarNome(@RequestParam String nome) {
+    public List<Cliente> buscarNome(@RequestParam String nome) throws RecursoNaoEncontradoException {
 
         return clienteRepository.findAll().stream()
                 .filter(c -> c.getNome().toLowerCase()

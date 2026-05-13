@@ -3,6 +3,7 @@ package org.serratec.alula03.controller;
 import java.util.List;
 
 import org.serratec.alula03.domain.Pedido;
+import org.serratec.alula03.exception.RecursoNaoEncontradoException;
 import org.serratec.alula03.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,11 +33,11 @@ public class PedidoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Pedido> getPedidoById(@PathVariable Long id) {
+    public ResponseEntity<Pedido> getPedidoById(@PathVariable Long id) throws RecursoNaoEncontradoException {
 
         return pedidosRepository.findById(id)
                 .map(pedido -> ResponseEntity.ok(pedido))
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Pedido não encontrado com o ID: " + id));
         /*
          * Optional<Pedido> pedidos = pedidosRepository.findById(id);
          * 
