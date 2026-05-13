@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.PastOrPresent;
 
 @Entity
 @Table(name = "pedido")
@@ -32,6 +33,7 @@ public class Pedido {
     @Column(name = "total", nullable = false, precision = 10, scale = 2)
     private BigDecimal total;
 
+    @PastOrPresent(message = "Data invalida!")
     @Column(name = "dataPedido")
     private LocalDate dataPedido;
 

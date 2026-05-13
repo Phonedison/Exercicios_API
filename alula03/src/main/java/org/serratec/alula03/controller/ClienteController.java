@@ -5,7 +5,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.serratec.alula03.domain.Cliente;
-
 import org.serratec.alula03.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -150,6 +149,7 @@ public class ClienteController {
      * }
      */
 
+    // -> Atualizar
     @PutMapping("/{id}")
     public ResponseEntity<Cliente> atualizar(@Valid @PathVariable Long id, @Valid @RequestBody Cliente body) {
         if (!clienteRepository.existsById(id)) {
@@ -160,6 +160,7 @@ public class ClienteController {
         return ResponseEntity.ok(body);
     }
 
+    // -> Criar
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Cliente inserir(@Valid @RequestBody Cliente cliente) {

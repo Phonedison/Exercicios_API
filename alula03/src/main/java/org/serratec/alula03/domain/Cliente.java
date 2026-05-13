@@ -3,7 +3,6 @@ package org.serratec.alula03.domain;
 import java.time.LocalDate;
 
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.UniqueElements;
 import org.hibernate.validator.constraints.br.CPF;
 
 import jakarta.persistence.Column;
@@ -33,7 +32,7 @@ public class Cliente {
 
     @CPF(message = "CPF inválido")
     @NotNull(message = "Valor inválido")
-    @NotBlank(message = "O CPF é obrigatório")
+    @NotBlank(message = "CPF é obrigatório")
     @Column(name = "cpf", unique = true)
     private String cpf;
 
