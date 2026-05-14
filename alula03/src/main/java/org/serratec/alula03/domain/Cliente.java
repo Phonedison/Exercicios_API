@@ -11,6 +11,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -19,7 +21,8 @@ import jakarta.validation.constraints.Past;
 
 @Entity
 @Table(name = "cliente")
-public class Cliente {
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Cliente extends PessoaBase {
 
     @Id
     @Column(name = "id_cliente")
@@ -49,12 +52,13 @@ public class Cliente {
     @Embedded
     private DocumentoCliente documentoCliente;
 
-    public Cliente(Long id,
+    public Cliente(String telefone, String endereco, Boolean ativo, Long id,
             @Length(max = 60, message = "valor acima do esperado") @NotBlank(message = "O nome é Obrigatório") String nome,
             @CPF(message = "CPF inválido") @NotNull(message = "Valor inválido") @NotBlank(message = "CPF é obrigatório") String cpf,
             @Email(regexp = ".*", message = "E-mail inválido") @Length(max = 50, message = "Limite atingindo") String email,
             @Past(message = "Data inválida, informe uma data no passado") LocalDate dataNascimento,
             DocumentoCliente documentoCliente) {
+        super(telefone, endereco, ativo);
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;

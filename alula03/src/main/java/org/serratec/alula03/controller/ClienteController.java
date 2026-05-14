@@ -9,6 +9,7 @@ import org.serratec.alula03.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,19 +36,19 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cliente> buscar(@PathVariable Long id) throws RecursoNaoEncontradoException {
+    public ResponseEntity<Cliente> buscar(@Valid @PathVariable Long id) throws RecursoNaoEncontradoException {
 
         return clienteRepository.findById(id) // -> reestruturado para uso de stream()
                 .map(cliente -> ResponseEntity.ok(cliente))
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Cliente de ID '" + id + "' não encontrado!")); // ->
-                                                                                                                     // caso
-                                                                                                                     // tenha
-                                                                                                                     // erro,
-                                                                                                                     // retorna
-                                                                                                                     // o
-                                                                                                                     // throw
-                                                                                                                     // utilizando
-                                                                                                                     // .orElseThrow
+        // caso
+        // tenha
+        // erro,
+        // retorna
+        // o
+        // throw
+        // utilizando
+        // .orElseThrow
 
         /*
          * Cliente cliente = clienteRepository.findById(id) -> mantém mas tira o
@@ -61,7 +62,7 @@ public class ClienteController {
     }
 
     @GetMapping("/buscar")
-    public List<Cliente> buscarNome(@RequestParam String nome) throws RecursoNaoEncontradoException {
+    public List<Cliente> buscarNome(@Valid @RequestParam String nome) throws RecursoNaoEncontradoException {
 
         return clienteRepository.findAll().stream()
                 .filter(c -> c.getNome().toLowerCase()
