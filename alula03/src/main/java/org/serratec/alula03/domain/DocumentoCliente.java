@@ -18,6 +18,9 @@ public class DocumentoCliente {
     @Enumerated(EnumType.ORDINAL)
     private StatusCliente statusCliente;
 
+    public DocumentoCliente() {
+    }
+
     public DocumentoCliente(String cpfOuCnpj, String rgInscricaoEstadual, TipoCliente tipoCliente,
             StatusCliente statusCliente) {
         this.cpfOuCnpj = cpfOuCnpj;

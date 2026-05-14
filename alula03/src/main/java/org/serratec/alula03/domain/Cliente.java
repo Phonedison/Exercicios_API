@@ -52,6 +52,9 @@ public class Cliente extends PessoaBase {
     @Embedded
     private DocumentoCliente documentoCliente;
 
+    public Cliente() {
+    }
+
     public Cliente(String telefone, String endereco, Boolean ativo, Long id,
             @Length(max = 60, message = "valor acima do esperado") @NotBlank(message = "O nome é Obrigatório") String nome,
             @CPF(message = "CPF inválido") @NotNull(message = "Valor inválido") @NotBlank(message = "CPF é obrigatório") String cpf,

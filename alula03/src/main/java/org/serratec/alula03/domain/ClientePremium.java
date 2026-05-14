@@ -7,7 +7,6 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,6 +18,10 @@ public class ClientePremium extends Cliente {
 
     private Double limiteCredito;
     private String nivelFidelidade;
+
+    public ClientePremium() {
+        super();
+    }
 
     public ClientePremium(String telefone, String endereco, Boolean ativo, Long id,
             @Length(max = 60, message = "valor acima do esperado") @NotBlank(message = "O nome é Obrigatório") String nome,
