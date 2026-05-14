@@ -37,7 +37,7 @@ public class PedidoController {
 
         return pedidosRepository.findById(id)
                 .map(pedido -> ResponseEntity.ok(pedido))
-                .orElseThrow(() -> new RecursoNaoEncontradoException("Pedido não encontrado com o ID: " + id));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Pedido de ID '" + id + "' não encontrado!"));
         /*
          * Optional<Pedido> pedidos = pedidosRepository.findById(id);
          * 

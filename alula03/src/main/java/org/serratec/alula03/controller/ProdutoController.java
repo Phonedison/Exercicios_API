@@ -34,11 +34,15 @@ public class ProdutoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Produto> buscarPorId(@PathVariable Long id) throws RecursoNaoEncontradoException {
+    public ResponseEntity<Produto> buscarPorId(@PathVariable Long id) throws RecursoNaoEncontradoException { // throws
+                                                                                                             // -> não é
+                                                                                                             // necessário
+                                                                                                             // mas
+                                                                                                             // depende...
 
         return produtoRepository.findById(id)
                 .map(pedido -> ResponseEntity.ok(pedido))
-                .orElseThrow(() -> new RecursoNaoEncontradoException("Pedido não encontrado com o ID: " + id));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Produto de ID '" + id + "' não encontrado!"));
 
         /*
          * Optional<Produto> produto = produtoRepository.findById(id); // sem Optional

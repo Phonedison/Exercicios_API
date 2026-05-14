@@ -39,15 +39,15 @@ public class ClienteController {
 
         return clienteRepository.findById(id) // -> reestruturado para uso de stream()
                 .map(cliente -> ResponseEntity.ok(cliente))
-                .orElseThrow(() -> new RecursoNaoEncontradoException("Cliente não encontrado com id: " + id)); // ->
-                                                                                                               // caso
-                                                                                                               // tenha
-                                                                                                               // erro,
-                                                                                                               // retorna
-                                                                                                               // o
-                                                                                                               // throw
-                                                                                                               // utilizando
-                                                                                                               // .orElseThrow
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Cliente de ID '" + id + "' não encontrado!")); // ->
+                                                                                                                     // caso
+                                                                                                                     // tenha
+                                                                                                                     // erro,
+                                                                                                                     // retorna
+                                                                                                                     // o
+                                                                                                                     // throw
+                                                                                                                     // utilizando
+                                                                                                                     // .orElseThrow
 
         /*
          * Cliente cliente = clienteRepository.findById(id) -> mantém mas tira o

@@ -1,0 +1,45 @@
+### Arquivos de Documentação e Build Gerais ###
+HELP.md
+**/target/
+**/.mvn/wrapper/maven-wrapper.jar
+
+# Permitir recursivamente alvos de build dentro de src (exceções solicitadas)
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS (Spring Tool Suite) ###
+**/.apt_generated
+**/.classpath
+**/.factorypath
+**/.project
+**/.settings
+**/.springBeans
+**/.sts4-cache
+
+### IntelliJ IDEA ###
+**/.idea/
+**/*.iws
+**/*.iml
+**/*.ipr
+
+### NetBeans ###
+**/nbproject/private/
+**/nbbuild/
+**/dist/
+**/nbdist/
+**/.nb-gradle/
+**/build/
+
+# Permitir builds específicos do NetBeans dentro de src
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+**/.vscode/
+
+### Banco de Dados H2 ###
+**/h2/
+
+### Outros (específicos da sua árvore) ###
+# Ignora logs de upgrade que aparecem na aula02 e demo
+**/.github/java-upgrade/*/logs/

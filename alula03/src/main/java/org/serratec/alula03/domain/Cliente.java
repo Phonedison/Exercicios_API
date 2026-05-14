@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -45,16 +46,21 @@ public class Cliente {
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
 
-    public Cliente(Long id, String nome, String cpf, String email, LocalDate dataNascimento) {
+    @Embedded
+    private DocumentoCliente documentoCliente;
+
+    public Cliente(Long id,
+            @Length(max = 60, message = "valor acima do esperado") @NotBlank(message = "O nome é Obrigatório") String nome,
+            @CPF(message = "CPF inválido") @NotNull(message = "Valor inválido") @NotBlank(message = "CPF é obrigatório") String cpf,
+            @Email(regexp = ".*", message = "E-mail inválido") @Length(max = 50, message = "Limite atingindo") String email,
+            @Past(message = "Data inválida, informe uma data no passado") LocalDate dataNascimento,
+            DocumentoCliente documentoCliente) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
         this.dataNascimento = dataNascimento;
-    }
-
-    public Cliente() {
-
+        this.documentoCliente = documentoCliente;
     }
 
     public Long getId() {
@@ -95,6 +101,14 @@ public class Cliente {
 
     public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
+    }
+
+    public DocumentoCliente getDocumentoCliente() {
+        return documentoCliente;
+    }
+
+    public void setDocumentoCliente(DocumentoCliente documentoCliente) {
+        this.documentoCliente = documentoCliente;
     }
 
 }
