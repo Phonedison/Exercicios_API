@@ -37,10 +37,10 @@ public class LivroController {
     @GetMapping("/{id}")
     public ResponseEntity<Livro> listar(@PathVariable Long id) {
 
-        Optional<Livro> Livro = livroRepository.findById(id);
+        Optional<Livro> livros = livroRepository.findById(id);
 
-        if (Livro.isPresent())
-            return ResponseEntity.ok(Livro.get());
+        if (livros.isPresent())
+            return ResponseEntity.ok(livros.get());
 
         return ResponseEntity.notFound().build();
     }

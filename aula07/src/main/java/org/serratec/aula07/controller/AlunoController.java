@@ -1,10 +1,10 @@
-package org.serratec.aula06.controller;
+package org.serratec.aula07.controller;
 
 import java.util.List;
 import java.util.Optional;
 
-import org.serratec.aula06.domain.Editora;
-import org.serratec.aula06.repository.EditoraRepository;
+import org.serratec.aula07.domain.Aluno;
+import org.serratec.aula07.repository.AlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,38 +19,39 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/editoras")
-public class EditoraController {
+@RequestMapping("/alunos")
+public class AlunoController {
 
     @Autowired
-    private EditoraRepository editoraRepository;
+    AlunoRepository alunoRepository;
 
     @GetMapping
-    public ResponseEntity<List<Editora>> listar() {
-        List<Editora> editoras = editoraRepository.findAll();
-        return ResponseEntity.ok(editoras);
+    public ResponseEntity<List<Aluno>> listar() {
+        List<Aluno> alunos = alunoRepository.findAll();
+        return ResponseEntity.ok(alunos);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Editora> listar(@PathVariable Long id) {
+    public ResponseEntity<Aluno> listar(@Valid @PathVariable Long id) {
 
-        Optional<Editora> editora = editoraRepository.findById(id);
+        Optional<Aluno> alunos = alunoRepository.findById(id);
 
-        if (editora.isPresent())
-            return ResponseEntity.ok(editora.get());
+        if (alunos.isPresent())
+            return ResponseEntity.ok(alunos.get());
 
         return ResponseEntity.notFound().build();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Editora inserir(@Valid @RequestBody Editora editora) {
-        return editoraRepository.save(editora);
+    public Aluno inserir(@Valid @RequestBody Aluno aluno) {
+        return alunoRepository.save(aluno);
     }
 
     @PostMapping("/lista")
-    public List<Editora> inserirVarios(@RequestBody List<Editora> editoras) {
-        return editoraRepository.saveAll(editoras);
+    @ResponseStatus(HttpStatus.CREATED)
+    public List<Aluno> inserirVarios(@Valid @RequestBody List<Aluno> alunos) {
+        return alunoRepository.saveAll(alunos);
     }
 
 }
