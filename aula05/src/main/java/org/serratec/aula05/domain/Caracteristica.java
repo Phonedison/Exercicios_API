@@ -12,6 +12,7 @@ public class Caracteristica {
     private String renavam;
     private String chassi;
     private Long ano;
+    private String cor;
 
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
@@ -19,10 +20,12 @@ public class Caracteristica {
     @Enumerated(EnumType.ORDINAL)
     private Combustivel combustivel;
 
-    public Caracteristica(String renavam, String chassi, Long ano, Categoria categoria, Combustivel combustivel) {
+    public Caracteristica(String renavam, String chassi, Long ano, String cor, Categoria categoria,
+            Combustivel combustivel) {
         this.renavam = renavam;
         this.chassi = chassi;
         this.ano = ano;
+        this.cor = cor;
         this.categoria = categoria;
         this.combustivel = combustivel;
     }
@@ -65,6 +68,14 @@ public class Caracteristica {
 
     public void setCombustivel(Combustivel combustivel) {
         this.combustivel = combustivel;
+    }
+
+    public String getCor() {
+        return cor;
+    }
+
+    public void setCor(String cor) {
+        this.cor = cor;
     }
 
 }
